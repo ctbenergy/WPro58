@@ -3,6 +3,7 @@
 #include "state.h"
 
 #include "state_screensaver.h"
+#include "state_nmode.h"
 #include "state_search.h"
 #include "state_bandscan.h"
 #include "state_menu.h"
@@ -31,6 +32,7 @@ void *operator new(size_t size, void *ptr){
 #define MAX(a, b) (a > b ? a : b)
 #define STATE_BUFFER_SIZE \
     MAX(sizeof(ScreensaverStateHandler), \
+    MAX(sizeof(NmodeStateHandler), \
     MAX(sizeof(SearchStateHandler), \
     MAX(sizeof(BandScanStateHandler), \
     MAX(sizeof(MenuStateHandler), \
@@ -39,7 +41,7 @@ void *operator new(size_t size, void *ptr){
 	MAX(sizeof(SettingsCallsignStateHandler), \
 	MAX(sizeof(SettingsFavouritesStateHandler), \
 	sizeof(FavouriteScreenStateHandler) \
-	))))))))
+	)))))))))
 ;
 
 namespace StateMachine {
@@ -107,6 +109,7 @@ namespace StateMachine {
                 break;
 
         switch (state) {
+        	STATE_FACTORY(State::NMODE, NmodeStateHandler);
             STATE_FACTORY(State::SEARCH, SearchStateHandler);
             STATE_FACTORY(State::SCREENSAVER, ScreensaverStateHandler);
             STATE_FACTORY(State::BANDSCAN, BandScanStateHandler);

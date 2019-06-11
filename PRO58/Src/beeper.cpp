@@ -15,15 +15,19 @@ namespace Beeper
 	}
 
 	void welcome(){
-		Beeper::beepC(200); //welcome beeep ;)
+		Beeper::beepC(100); //welcome beeep ;)
 		while (Beeper::beeping) {
 			Beeper::update();
 		}
-		Beeper::beepE(200); //welcome beeep ;)
+		Beeper::beepD(100); //welcome beeep ;)
 		while (Beeper::beeping) {
 			Beeper::update();
 		}
-		Beeper::beepG(200); //welcome beeep ;)
+		Beeper::beepE(100); //welcome beeep ;)
+		while (Beeper::beeping) {
+			Beeper::update();
+		}
+		Beeper::beepE(100); //welcome beeep ;)
 		while (Beeper::beeping) {
 			Beeper::update();
 		}
@@ -32,7 +36,7 @@ namespace Beeper
 		while (Beeper::beeping) {
 			Beeper::update();
 		}
-		Beeper::beepG(400); //welcome beeep ;)
+		Beeper::beepC(400); //welcome beeep ;)
 		while (Beeper::beeping) {
 			Beeper::update();
 		}

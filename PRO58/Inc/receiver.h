@@ -42,6 +42,7 @@ namespace Receiver {
 
     void setChannel(uint8_t channel, bool store = false);
     void setBandChannel(uint8_t channel, bool store = false);
+    void setScannerFrequency(uint16_t freq);
     void updateRssi();
     void setActiveReceiver(ReceiverId receiver = ReceiverId::A);
     #ifdef USE_DIVERSITY

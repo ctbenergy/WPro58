@@ -48,7 +48,7 @@ namespace Receiver {
 
     void setChannel(uint8_t channel, bool store)
     {
-        ReceiverSpi::setSynthRegisterB(Channels::getSynthRegisterB(channel));
+        ReceiverSpi::setSynthRegisterB(Channels::getSynthRegisterB(channel), 0x03);
 
         rssiStableTimer.reset();
         activeChannel = channel;
@@ -64,6 +64,17 @@ namespace Receiver {
         uint8_t orderedChanelIndex = bandOffset + inChannel;
         setChannel(orderedChanelIndex, store);
     }
+
+    void setScannerFrequency(uint16_t freq)
+	{
+    	// --- calc divider
+		uint16_t tmp = (freq - 479) >> 1;
+		uint16_t n = tmp >> 6;
+		uint16_t a = tmp - (n << 6);
+		ReceiverSpi::setSynthRegisterB((n<<8) | a, 0x02);
+
+		rssiStableTimer.reset();
+	}
 
     void setActiveReceiver(ReceiverId receiver) {
     	bool swState = receiver == ReceiverId::A;

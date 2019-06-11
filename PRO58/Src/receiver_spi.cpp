@@ -7,8 +7,8 @@
 
 static inline void sendBit(uint8_t value);
 static inline void sendBits(uint32_t bits, uint8_t count = 20);
-static inline void sendSlaveSelect(GPIO_PinState value);
-static inline void sendRegister(uint8_t address, uint32_t data);
+static inline void sendSlaveSelect(GPIO_PinState value, uint8_t mask);
+static inline void sendRegister(uint8_t address, uint32_t data, uint8_t mask);
 
 #define SPI_ADDRESS_SYNTH_A 0x01
 #define SPI_ADDRESS_POWER 0x0A
@@ -37,19 +37,19 @@ namespace ReceiverSpi {
     //
     // Refer to RTC6715 datasheet for further details.
     //
-    void setSynthRegisterB(uint16_t value) {
-        sendRegister(SPI_ADDRESS_SYNTH_A, value);
+    void setSynthRegisterB(uint16_t value, uint8_t mask) {
+        sendRegister(SPI_ADDRESS_SYNTH_A, value, mask);
     }
 
-    void setPowerDownRegister(uint32_t value) {
-        sendRegister(SPI_ADDRESS_POWER, value);
+    void setPowerDownRegister(uint32_t value, uint8_t mask) {
+        sendRegister(SPI_ADDRESS_POWER, value, mask);
     }
 }
 
-static inline void sendRegister(uint8_t address, uint32_t data) {
+static inline void sendRegister(uint8_t address, uint32_t data, uint8_t mask) {
 
 
-    sendSlaveSelect(GPIO_PIN_RESET);
+    sendSlaveSelect(GPIO_PIN_RESET, mask);
 
     sendBits(address, 4);
     sendBit(0x1); // Enable write.
@@ -57,7 +57,7 @@ static inline void sendRegister(uint8_t address, uint32_t data) {
     sendBits(data, 20);
 
     // Finished clocking data in
-    sendSlaveSelect(GPIO_PIN_SET);
+    sendSlaveSelect(GPIO_PIN_SET, mask);
 }
 
 
@@ -81,9 +81,11 @@ static inline void sendBit(uint8_t value) {
     DWT_Delay_us(1);//delayMicroseconds(1);
 }
 
-static void sendSlaveSelect(GPIO_PinState value) {
-	HAL_GPIO_WritePin(SPI_SLAVE_SELECT_A_GPIO_Port,SPI_SLAVE_SELECT_A_Pin,value);
-    HAL_GPIO_WritePin(SPI_SLAVE_SELECT_B_GPIO_Port,SPI_SLAVE_SELECT_B_Pin,value);
+static void sendSlaveSelect(GPIO_PinState value, uint8_t mask) {
+	if (mask & 0x01)
+		HAL_GPIO_WritePin(SPI_SLAVE_SELECT_A_GPIO_Port,SPI_SLAVE_SELECT_A_Pin,value);
+	if (mask & 0x02)
+    	HAL_GPIO_WritePin(SPI_SLAVE_SELECT_B_GPIO_Port,SPI_SLAVE_SELECT_B_Pin,value);
     DWT_Delay_us(1);
 
 //    digitalWrite(PIN_SPI_SLAVE_SELECT_A, value);

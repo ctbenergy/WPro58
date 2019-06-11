@@ -38,8 +38,8 @@
 // Shorter values will make it more reactive, but may lead to double trigger.
 #define BUTTON_DEBOUNCE_DELAY 80
 
-#define SCREENSAVER_TIMEOUT 30 // Seconds to wait before entering screensaver
-#define SCREENSAVER_DISPLAY_CYCLE 3 // Seconds between switching logo/channel
+#define SCREENSAVER_TIMEOUT 60 // Seconds to wait before entering screensaver
+#define SCREENSAVER_DISPLAY_CYCLE 5 // Seconds between switching logo/channel
 
 // Time needed to hold mode to get to menu
 #define BUTTON_WAIT_FOR_MENU 1000

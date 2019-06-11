@@ -6,8 +6,8 @@
 
 
 namespace ReceiverSpi {
-  void setSynthRegisterB(uint16_t value);
-  void setPowerDownRegister(uint32_t value);
+  void setSynthRegisterB(uint16_t value, uint8_t mask);
+  void setPowerDownRegister(uint32_t value, uint8_t mask);
 };
 
 

@@ -182,7 +182,7 @@ int main(void) {
 
 	Buttons::registerChangeFunc(globalMenuButtonHandler);
 	// Switch to initial state.
-	StateMachine::switchState(StateMachine::State::SEARCH);
+	StateMachine::switchState(StateMachine::State::NMODE);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -207,6 +207,7 @@ int main(void) {
 				(
 					StateMachine::currentState == StateMachine::State::FAVOURITES
 					|| StateMachine::currentState == StateMachine::State::SEARCH
+					|| StateMachine::currentState == StateMachine::State::NMODE
 				)
 				&& EepromSettings.screensaverEnabled
 				&& ((HAL_GetTick() - Buttons::lastChangeTime) > (SCREENSAVER_TIMEOUT * 1000))

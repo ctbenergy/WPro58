@@ -11,8 +11,11 @@
 #ifdef PUBLIC_RELEASE
 #include "logo.h"
 #else
-#include "piodabro_logo.h"
+//#include "piodabro_logo.h"
+#include "n3_logo.h"
 #endif
+
+#define USE_CALLSIGN
 
 void StateMachine::ScreensaverStateHandler::onEnter() {
     showLogo = false;
